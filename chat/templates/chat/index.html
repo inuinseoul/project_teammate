@@ -4,28 +4,98 @@
 <head>
     <meta charset="utf-8"/>
     <title>Chat Rooms</title>
+    <style>
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+        }
+
+        #wrap {
+            width: 100%;
+            height: 100%;
+            overflow: scroll;
+            background-color: white;
+        }
+
+        #chatWrap {
+            width: 600px;
+            height: 800px;
+            margin: auto;
+            border: 1px solid white;
+            background-color: white;
+            border-radius: 20px;
+        }
+
+        #sendForm {
+            height: 10%;
+            padding: 5px;
+            border-top: 1px solid white;
+            text-align: center;
+            border-radius: 20px;
+        }
+
+        #title{
+            background: #ffbbb1;
+            height:50px;
+            font-size: 30px;
+            margin: auto;
+            border-radius: 5px;
+            color: white;
+        }
+
+        {%for i in team_list%}
+            #room-name-input{{i}} {
+                width: 80%;
+                height: 50px;
+                font-size: 20px;
+                border-radius: 8px;
+            }
+
+            #room-name-submit{{i}} {
+                width: 16%;
+                height: 50px;
+                border-radius: 20px;
+                background-color: #white;
+                font-size: 17px;
+            }
+        {%endfor%}
+    </style>
 </head>
 
 <body>
-    팀목록<br/>
+    <div id="wrap">
+        <div id='title'>
+            <center>
+            team list
+            </center>
+        </div>
+    <div id="chatWrap">
+    <form id="sendForm" onsubmit="return false">
     {%for i in team_list%}
-        <input id="room-name-input" value='{{i}}'/>
-        <input id="room-name-submit" type="button" value="이동"/>
+        </br>
+        <input id="room-name-input{{i}}" value='{{i}}'readonly />
+        <input id="room-name-submit{{i}}" type="button" value="chat"/>
         <br/>
-    {%endfor%}
-
+        <br/>
+    
     <script>
-        document.querySelector('#room-name-input').focus();
-        document.querySelector('#room-name-input').onkeyup = function(e) {
+        document.querySelector('#room-name-input{{i}}').focus();
+        document.querySelector('#room-name-input{{i}}').onkeyup = function(e) {
             if (e.keyCode === 13) {  // enter, return
-                document.querySelector('#room-name-submit').click();
+                document.querySelector('#room-name-submit{{i}}').click();
             }
         };
 
-        document.querySelector('#room-name-submit').onclick = function(e) {
-            var roomName = document.querySelector('#room-name-input').value;
+        document.querySelector('#room-name-submit{{i}}').onclick = function(e) {
+            var roomName = document.querySelector('#room-name-input{{i}}').value;
             window.location.pathname = '/chat/' + roomName + '/';
         };
     </script>
+    {%endfor%}
+    </form>
+    </div>
+    </div>
 </body>
 </html>
