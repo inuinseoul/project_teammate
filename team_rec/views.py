@@ -32,12 +32,19 @@ def team_rec_list(request, customer_pk):
             to_pk = request.POST["request"]
             customer = Customer.objects.get(pk=to_pk)
             sender = request.user  # 알림보내는 사람
-
+            invite_state = False
+            team_pk = int(request.POST["invite_state"])
+            invite_team = Team_list.objects.filter(pk=team_pk)
+            if request.POST["invite_state"]:
+                invite_state = True
+                invite_team = Team_list.objects.get(pk=team_pk)
             Message.objects.create(
                 sender=sender.customer,
                 recipient=customer,
                 contents=request.POST["contents"],
                 kind="team",
+                invite_state=invite_state,
+                invite_team=invite_team,
             )
         if request.POST["request"] == "0":
             page = int(request.POST["page"]) + 5
