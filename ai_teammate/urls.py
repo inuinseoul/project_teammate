@@ -17,6 +17,9 @@ from django.contrib import admin
 from django.urls import path
 from django.urls import include
 from home import views
+from django.conf.urls import url, include
+from django.contrib import admin
+
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -27,4 +30,6 @@ urlpatterns = [
     path("team_rec/", include("team_rec.urls")),
     path("study_rec/", include("study_rec.urls")),
     path("newsletter/", include("newsletter.urls")),
+    url(r'^chat/', include('chat.urls')),
+    url(r'^admin/', admin.site.urls),
 ]

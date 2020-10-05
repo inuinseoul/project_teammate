@@ -26,12 +26,13 @@ SECRET_KEY = "*#md@d!7y2v_$u(9(7eb5vrl^!6a5uesp09=kld%2*f79*j=cv"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
 DJANGO_APPS = [
+    'channels',
+    'chat',
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -79,6 +80,13 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 
 WSGI_APPLICATION = "ai_teammate.wsgi.application"
 
+# Channels
+ASGI_APPLICATION = 'ai_teammate.routing.application'
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer"
+    }
+}
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
