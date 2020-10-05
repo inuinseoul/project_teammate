@@ -58,8 +58,9 @@ def team_rec_list(request, customer_pk):
     customer_role = df3.loc[
         :, ["analysis_hearts", "web_hearts", "design_hearts", "modeling_hearts"]
     ]
-
-    my_num = df0[df0["user"] == customer_pk].index.tolist()[0]
+    print(df0)
+    print(customer_pk)
+    my_num = df0[df0["id"] == customer_pk].index.tolist()[0]
 
     # 각 유사도측정
     score_similarity = cosine_similarity(customer_score, customer_score)
