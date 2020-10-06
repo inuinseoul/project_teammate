@@ -41,7 +41,7 @@
                         <div class="alarm">
                             <a href="#" data-toggle="modal" data-target="#exampleModal1{{message.pk}}">
                                 {% if message.invite_state %}
-                                <p>{{message.sender.name}}님에게서 팀메이트 요청 도착</p>                                
+                                <p>{{message.sender.name}}님에게서 팀메이트 요청 도착 ({{message.invite_team.name}})</p>                           
                                 {% else %}
                                 <p>{{message.sender.name}}님에게서 메세지 도착</p>
                                 {% endif %}
@@ -52,7 +52,7 @@
                                 {% else %}
                                   <p>{{message.contents}}</p>
                                 {% endif %}
-                                {% if message.invite_state %}                                
+                                {% if message.invite_state %}                                                           
                                 <a href="{% url 'alarm:join_team' message.pk %}" class="btn btn-primary btn-lg active text-center" role="button">수락</a>
                                 <a href="{% url 'alarm:del_alarm' message.pk %}" class="btn btn-secondary btn-lg active text-center" role="button">거절</a>
                                 {% endif %}
@@ -268,7 +268,12 @@
 
             <div class="article_side">
                 <h1>TeamMate</h1>
-                <p><a href='{% url 'home' %}'>home</a></p>
+                <p><a href='{% url 'home' %}'>home</a></p> 
+                {% if error_state %}
+                <div class="alert alert-danger" role="alert">
+                  {{error_message}}
+                </div>         
+                {% endif %}     
             </div>
             
         </div>
