@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from users.models import Customer, Domain, Score, Role
 from alarm.models import Message
+from team_rec.models import Team_member,Team_list
+from django.http import JsonResponse
 
 # 알림 리스트 보기
 def alarm_list(request, customer_pk):
@@ -49,3 +51,23 @@ def check_info(request, message_pk):
     }
 
     return render(request, "alarm/check_info.html", context)
+
+def join_team(request, message_pk):
+    message = Message.objects.get(pk=message_pk)
+    team = Team_list.objects.get(pk=message.invite_team.pk)
+    Team_member.objects.create(
+        team_id=team,
+        member=request.user
+    )
+    customer = message.recipient
+    message.delete()
+
+    message_list_team = Message.objects.filter(kind="team").filter(recipient=customer)
+    message_list_study = Message.objects.filter(kind="study").filter(recipient=customer)
+
+    context = {
+        "message_list_team": message_list_team,
+        "message_list_study": message_list_study,
+    }
+
+    return render(request, "alarm/alarm_list.html", context)

@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.http import request
 from django.shortcuts import render
 from django.contrib import auth
@@ -13,7 +14,7 @@ from django.shortcuts import redirect
 
 from users.models import Customer, Domain, Score, Role
 from alarm.models import Message
-from team_rec.models import Team_list
+from team_rec.models import Team_list, Team_member
 
 # font_name = font_manager.FontProperties(
 #     fname="/static/malgun.ttf"
@@ -32,13 +33,26 @@ def team_rec_list(request, customer_pk):
             to_pk = request.POST["request"]
             customer = Customer.objects.get(pk=to_pk)
             sender = request.user  # 알림보내는 사람
-
-            Message.objects.create(
-                sender=sender.customer,
-                recipient=customer,
-                contents=request.POST["contents"],
-                kind="team",
-            )
+            invite_state = False
+            team_pk = int(request.POST["invite_state"])
+            if team_pk:
+                invite_state = True
+                invite_team = Team_list.objects.get(pk=team_pk)
+                Message.objects.create(
+                    sender=sender.customer,
+                    recipient=customer,
+                    contents=request.POST["contents"],
+                    kind="team",
+                    invite_state=invite_state,
+                    invite_team=invite_team,
+                )
+            else:
+                Message.objects.create(
+                    sender=sender.customer,
+                    recipient=customer,
+                    contents=request.POST["contents"],
+                    kind="team",
+                )               
         if request.POST["request"] == "0":
             page = int(request.POST["page"]) + 5
 
