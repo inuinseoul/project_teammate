@@ -253,3 +253,6 @@ def team_edit(request):
     else:
         form = Team_form()
     return render(request, "team_rec/team_make.html", {"form": form})
+
+def detail(request,team_pk):
+    pass

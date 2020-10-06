@@ -20,10 +20,25 @@
         }
 
         #chatWrap {
-            width: 600px;
+            width: 1000px;
             height: 800px;
             margin: auto;
             border: 1px solid white;
+            background-color: white;
+            border-radius: 20px;
+        }
+        #left_chatWrap {
+            width: 45%;
+            float: left;
+            border: 1px solid black;
+            background-color: white;
+            border-radius: 20px;
+
+        }
+        #right_chatWrap {
+            width: 45%;
+            float: right;
+            border: 1px solid black;
             background-color: white;
             border-radius: 20px;
         }
@@ -48,10 +63,11 @@
         {%for i in team_list%}
         {%if i.leader == user%}
             #room-name-input{{i.name}} {
-                width: 80%;
+                width: 50%;
                 height: 50px;
                 font-size: 20px;
                 border-radius: 8px;
+                text-align: center;
             }
 
             #room-name-submit{{i.name}} {
@@ -67,13 +83,21 @@
         {%for i in team_member%}
         {%if i.member == user%}
             #room-name-input{{i.team_id.name}} {
-                width: 80%;
+                width: 50%;
                 height: 50px;
                 font-size: 20px;
                 border-radius: 8px;
+                text-align: center;
             }
 
             #room-name-submit{{i.team_id.name}} {
+                width: 16%;
+                height: 50px;
+                border-radius: 20px;
+                background-color: #white;
+                font-size: 17px;
+            }
+            #detail{
                 width: 16%;
                 height: 50px;
                 border-radius: 20px;
@@ -92,61 +116,68 @@
             team list
             </center>
         </div>
-    <div id="chatWrap">
-    <form id="sendForm" onsubmit="return false">
-    {%for i in team_list%}
-        {%if i.leader == user%}
-        팀장:{{user.customer.name}}
-        </br>
-        <input id="room-name-input{{i.name}}" value='{{i.name}}'readonly />
-        <input id="room-name-submit{{i.name}}" type="button" value="chat"/>
-        <br/>
-        <br/>
-    
-    <script>
-        document.querySelector('#room-name-input{{i.name}}').focus();
-        document.querySelector('#room-name-input{{i.name}}').onkeyup = function(e) {
-            if (e.keyCode === 13) {  // enter, return
-                document.querySelector('#room-name-submit{{i.name}}').click();
-            }
-        };
+        <div id="chatWrap">
+            <div id='left_chatWrap'>
+                <div>
+                <center><h3>I'm the team leader.</h3></center></div>
+                <form id="sendForm" onsubmit="return false">
+                {%for i in team_list%}
+                    {%if i.leader == user%}
+                    </br>
+                    <input id="room-name-input{{i.name}}" value='{{i.name}}'readonly />
+                    <button id='detail'><a href="{%url 'team_rec:detail' i.pk %}">detail</a></button>
+                    <input id="room-name-submit{{i.name}}" type="button" value="chat"/>
+                    <br/>
+                    <br/>
+                
+                <script>
+                    document.querySelector('#room-name-input{{i.name}}').focus();
+                    document.querySelector('#room-name-input{{i.name}}').onkeyup = function(e) {
+                        if (e.keyCode === 13) {  // enter, return
+                            document.querySelector('#room-name-submit{{i.name}}').click();
+                        }
+                    };
 
-        document.querySelector('#room-name-submit{{i.name}}').onclick = function(e) {
-            var roomName = document.querySelector('#room-name-input{{i.name}}').value;
-            window.location.pathname = '/chat/' + roomName + '/';
-        };
-    </script>
-    {%endif%}
-    {%endfor%}
-    <form id="sendForm" onsubmit="return false">
-    {%for i in team_member%}
-        {%if i.member == user%}
-        팀장:{{i.team_id.leader.customer.name}}
-        </br>
-        <input id="room-name-input{{i.team_id.name}}" value='{{i.team_id.name}}'readonly />
-        <input id="room-name-submit{{i.team_id.name}}" type="button" value="chat"/>
-        <br/>
-        <br/>
-    
-    <script>
-        document.querySelector('#room-name-input{{i.team_id.name}}').focus();
-        document.querySelector('#room-name-input{{i.team_id.name}}').onkeyup = function(e) {
-            if (e.keyCode === 13) {  // enter, return
-                document.querySelector('#room-name-submit{{i.team_id.name}}').click();
-            }
-        };
+                    document.querySelector('#room-name-submit{{i.name}}').onclick = function(e) {
+                        var roomName = document.querySelector('#room-name-input{{i.name}}').value;
+                        window.location.pathname = '/chat/' + roomName + '/';
+                    };
+                </script>
+                {%endif%}
+                {%endfor%}
+                </form>
+            </div>
+            <div id='right_chatWrap'>
+                <div id>
+                <center><h3>I'm a team member.</h3></center></div>
+                <form id="sendForm" onsubmit="return false">
+                {%for i in team_member%}
+                    {%if i.member == user%}
+                    </br>
+                    <input id="room-name-input{{i.team_id.name}}" value='{{i.team_id.name}}'readonly />
+                    <button id='detail'><a href="{%url 'team_rec:detail' i.pk %}">detail</a></button>
+                    <input id="room-name-submit{{i.team_id.name}}" type="button" value="chat"/>
+                    <br/>
+                    <br/>
+                
+                <script>
+                    document.querySelector('#room-name-input{{i.team_id.name}}').focus();
+                    document.querySelector('#room-name-input{{i.team_id.name}}').onkeyup = function(e) {
+                        if (e.keyCode === 13) {  // enter, return
+                            document.querySelector('#room-name-submit{{i.team_id.name}}').click();
+                        }
+                    };
 
-        document.querySelector('#room-name-submit{{i.team_id.name}}').onclick = function(e) {
-            var roomName = document.querySelector('#room-name-input{{i.team_id.name}}').value;
-            window.location.pathname = '/chat/' + roomName + '/';
-        };
-    </script>
-    {%endif%}
-    {%endfor%}
-
-    </form>
-    </form>
-    </div>
+                    document.querySelector('#room-name-submit{{i.team_id.name}}').onclick = function(e) {
+                        var roomName = document.querySelector('#room-name-input{{i.team_id.name}}').value;
+                        window.location.pathname = '/chat/' + roomName + '/';
+                    };
+                </script>
+                {%endif%}
+                {%endfor%}
+                </form>
+            </div>
+        </div>
     </div>
 </body>
 </html>
