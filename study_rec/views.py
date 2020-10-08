@@ -79,13 +79,26 @@ def study_rec_list(request, customer_pk):
             to_pk = request.POST["request"]
             customer = Customer.objects.get(pk=to_pk)
             sender = request.user  # 알림보내는 사람
-
-            Message.objects.create(
-                sender=sender.customer,
-                recipient=customer,
-                contents=request.POST["contents"],
-                kind="study",
-            )
+            invite_state = False
+            study_pk = int(request.POST["invite_state"])
+            if study_pk:
+                invite_state = True
+                invite_study = Study_list.objects.get(pk=study_pk)
+                Message.objects.create(
+                    sender=sender.customer,
+                    recipient=customer,
+                    contents=request.POST["contents"],
+                    kind="study",
+                    invite_state=invite_state,
+                    invite_study=invite_study,
+                )
+            else:
+                Message.objects.create(
+                    sender=sender.customer,
+                    recipient=customer,
+                    contents=request.POST["contents"],
+                    kind="study",
+                )               
         if request.POST["request"] == "0":
             page = int(request.POST["page"]) + 5
 

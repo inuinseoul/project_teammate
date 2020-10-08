@@ -167,13 +167,21 @@
                         <a href='{% url 'alarm:del_alarm' message.pk %}'><img src="{% static 'close_dark.png' %}" /></a>
                         <div class="alarm">
                             <a href="#" data-toggle="modal" data-target="#exampleModal2{{message.pk}}">
-                                <p>{{message.sender.name}}님에게서 스터디메이트 요청 도착</p>
+                                {% if message.invite_state %}
+                                <p>{{message.sender.name}}님에게서 스터디메이트 요청 도착 ({{message.invite_study.name}})</p>                           
+                                {% else %}
+                                <p>{{message.sender.name}}님에게서 메세지 도착</p>
+                                {% endif %}
                                 <p style="color: #868686;">{{message.sentAt}}</p>
                                 <hr />
                                 {% if message.contents|length == 0 %}
                                   <p>내용없음</p>
                                 {% else %}
                                   <p>{{message.contents}}</p>
+                                {% endif %}
+                                {% if message.invite_state %}                                                           
+                                <a href="{% url 'alarm:join_team' message.pk %}" class="btn btn-primary btn-lg active text-center" role="button">수락</a>
+                                <a href="{% url 'alarm:del_alarm' message.pk %}" class="btn btn-secondary btn-lg active text-center" role="button">거절</a>
                                 {% endif %}
                             </a>
                         </div>

@@ -1,6 +1,7 @@
 from django.db import models
 from users.models import Customer
 from team_rec.models import Team_list
+from study_rec.models import Study_list
 
 # Create your models here.
 # 알림(팀메이트)
@@ -17,4 +18,7 @@ class Message(models.Model):
     invite_state = models.BooleanField(default=False)
     invite_team = models.ForeignKey(
         Team_list, related_name="team_message", on_delete=models.CASCADE, null=True
+    )
+    invite_study = models.ForeignKey(
+        Study_list, related_name="study_message", on_delete=models.CASCADE, null=True
     )
