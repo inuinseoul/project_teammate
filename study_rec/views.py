@@ -8,7 +8,10 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib import font_manager, rc
-
+from django.shortcuts import redirect
+from .models import Study_list, Study_member
+from study_rec.forms import Study_form
+from django.utils import timezone
 font_name = font_manager.FontProperties(fname="c:/Windows/Fonts/malgun.ttf").get_name()
 rc("font", family=font_name)
 
@@ -235,3 +238,17 @@ def study_rec_list(request, customer_pk):
     }
 
     return render(request, "study_rec/study_rec_list.html", context)
+
+def study_make(request):
+    if request.method == "POST":
+        form = Study_form(request.POST)
+        if form.is_valid():
+            Study_list = form.save(commit=False)
+            Study_list.leader = request.user
+            Study_list.created_date = timezone.now()
+            Study_list.save()
+            return redirect("home")  # , pk=post.pk)
+
+    else:
+        form = Study_form()
+    return render(request, "study_rec/study_make.html", {"form": form})

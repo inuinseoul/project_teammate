@@ -6,4 +6,5 @@ urlpatterns = [
     path(
         "study_rec_list/<int:customer_pk>", views.study_rec_list, name="study_rec_list"
     ),
+    path("study_make/", views.study_make, name="study_make"),
 ]
