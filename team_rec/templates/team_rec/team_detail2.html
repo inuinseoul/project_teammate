@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block style %}
+<!--이 곳에 style에 해당하는 코드 (css파일 연결 등) 작성-->
+<style>
+    .view {
+        width: 50%;
+        margin: 10px;
+    }
+    .right {
+        float:right
+    }
+    .label {
+        font-size: 20px;
+        color: black;
+        margin-right: 10px;
+    }
+    .description {
+        font-size: 14px;
+        color: #868686;
+    }
+    
+    input {
+        border: 2px solid black;
+        border-radius: 7px;
+
+        width: 100%;
+        height: 35px;
+    }
+    textarea {
+        border: 2px solid black;
+        border-radius: 7px;
+
+        width: 100%;
+        height: 100px;
+    }
+
+    .form_input {
+        margin-top: 3%;
+        margin-bottom: 3%;
+        width: 60%;
+    }
+    .form_button {
+        margin-top: 10%;
+        margin-bottom: 20%;
+    }
+    .button_square { width: 60% }
+
+    .btn-group { float: right; }
+    
+    #right > h2 {
+        width: 60%;
+        text-align: center;
+        /* background-color: coral; */
+    }
+
+</style>
+{% endblock %}
+
+{% block content %}
+<!--이 곳에 페이지의 내용 작성-->
+  <nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background:#ffbbb1;">
+    <a class="navbar-brand" href="{% url 'home' %}" >Home</a>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item justify-content-end">
+          <a class="nav-link" href="{% url 'edit:info_edit' user.customer.pk %}">mypage</a>
+        </li>
+      </ul>
+      <a class="nav-link my-2 my-sm-0" style="color:white;" href="{% url 'users:logout' %}">signout</a>
+    </div>
+  </nav>
+  <br>
+  <br>
+  <br>
+  <div class='view'>
+  <div class='form_input'>
+    <span class='label'>팀명</span><span class='description'></span><br />
+    <input type='text' placeholder="팀이름을 입력해주세요" name="name" value='{{team.name}}' readonly/>
+  </div>
+  <div class='form_input'>
+    <span class='label'>팀장</span><span class='description'></span><br />
+    <input type='text' name="leader" value='{{team.leader.customer.name}}' readonly/>
+  </div>
+  <div class='form_input'>
+    <span class='label'>팀소개</span><span class='description'></span><br />
+    <textarea name="intro" placeholder='팀소개를 해주세요' readonly>{{team.intro}}</textarea>
+  <br/>
+  </form>
+  </div>
+  </div>
+{% endblock %}
+
+
+ 

@@ -59,6 +59,14 @@
             border-radius: 5px;
             color: white;
         }
+         
+         #detail{
+                width: 16%;
+                height: 50px;
+                border-radius: 20px;
+                background-color: #white;
+                font-size: 17px;
+            }
 
         {%for i in team_list%}
         {%if i.leader == user%}
@@ -97,13 +105,6 @@
                 background-color: #white;
                 font-size: 17px;
             }
-            #detail{
-                width: 16%;
-                height: 50px;
-                border-radius: 20px;
-                background-color: #white;
-                font-size: 17px;
-            }
         {%endif%}
         {%endfor%}
     </style>
@@ -125,7 +126,7 @@
                     {%if i.leader == user%}
                     </br>
                     <input id="room-name-input{{i.name}}" value='{{i.name}}'readonly />
-                    <button id='detail'><a href="{%url 'team_rec:detail' i.pk %}">detail</a></button>
+                    <button id='detail'><a href="{%url 'team_rec:detail1' i.pk %}">detail</a></button>
                     <input id="room-name-submit{{i.name}}" type="button" value="chat"/>
                     <br/>
                     <br/>
@@ -155,7 +156,7 @@
                     {%if i.member == user%}
                     </br>
                     <input id="room-name-input{{i.team_id.name}}" value='{{i.team_id.name}}'readonly />
-                    <button id='detail'><a href="{%url 'team_rec:detail' i.pk %}">detail</a></button>
+                    <button id='detail'><a href="{%url 'team_rec:detail2' i.team_id.pk %}">detail</a></button>
                     <input id="room-name-submit{{i.team_id.name}}" type="button" value="chat"/>
                     <br/>
                     <br/>

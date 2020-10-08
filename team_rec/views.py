@@ -240,19 +240,48 @@ def team_make(request):
     return render(request, "team_rec/team_make.html", {"form": form})
 
 
-def team_edit(request):
-    if request.method == "POST":
-        form = Team_form(request.POST)
-        if form.is_valid():
-            Team_list = form.save(commit=False)
-            Team_list.leader = request.user
-            Team_list.created_date = timezone.now()
-            Team_list.save()
-            # return redirect('team_edit', pk=post.pk)
+def detail1(request,team_pk):
+    if request.method=='POST':
+        user = request.user
+        name = request.POST['leader']
+        leader = User.objects.get(username=name)
+        team = Team_list.objects.get(pk=team_pk)
+        
+        Team_list.objects.filter(pk=team_pk).update(
+            name = request.POST['name'],
+            intro = request.POST['intro'],
+            leader = leader
+        )
+        
+        if user != leader:
+            member = Team_member.objects.get(team_id = team)
+        
+            if member:
+                member.delete()
 
-    else:
-        form = Team_form()
-    return render(request, "team_rec/team_make.html", {"form": form})
+            Team_member.objects.create(
+                team_id = team,
+                member = user
+            )
 
-def detail(request,team_pk):
-    pass
+        team_list = Team_list.objects.all
+        team_member = Team_member.objects.all
+        context = {
+            'team_list' : team_list,
+            'team_member' : team_member
+            }
+
+        return render(request, 'chat/index.html', context)
+
+    team_list = Team_list.objects.get(pk=team_pk)
+
+    context = {'team':team_list}
+
+    return render(request, 'team_rec/team_detail1.html', context)
+
+def detail2(request,team_pk):
+    team_list = Team_list.objects.get(pk=team_pk)
+    
+    context = {'team':team_list}
+
+    return render(request, 'team_rec/team_detail2.html', context)
