@@ -9,5 +9,21 @@
 <br>
 
 # 2. 사용기술
--	사용자기반 협업 필터링 응용 모델 기반 추천시스템<br>
+-	코사인유사도 기반 추천시스템<br>
 -	django를 활용한 페이지 구성<br>
+- sqlite를 기반 각종 모델 구성
+
+<br>
+
+# 3. 실행방법
+
+```
+pipenv shell
+pipenv install django
+python manage.py runserver
+```
+
+<br>
+
+# 4. 실행결과화면
+
