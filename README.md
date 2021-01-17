@@ -28,3 +28,5 @@ python manage.py runserver
 
 # 4. 실행결과화면
 
+![image](https://user-images.githubusercontent.com/70463738/104844280-ba9bfb00-5912-11eb-8828-92f95b444ebc.png)
+
