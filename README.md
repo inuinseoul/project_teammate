@@ -30,3 +30,7 @@ python manage.py runserver
 
 ![image](https://user-images.githubusercontent.com/70463738/104844280-ba9bfb00-5912-11eb-8828-92f95b444ebc.png)
 
+- 회원가입 시 각종정보를 입력받는다.
+- 입력된 회원들의 정보를 기반으로 회원들에게 가장 잘 맞는 팀원, 스터디메이트를 추천해준다.
+- 관심정보를 기반으로 뉴스레터도 보여준다.
+
